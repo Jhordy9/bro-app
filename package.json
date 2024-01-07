@@ -1,5 +1,5 @@
 {
-  "name": "woovi-stack",
+  "name": "bro-app",
   "private": true,
   "scripts": {
     "build": "turbo build",
