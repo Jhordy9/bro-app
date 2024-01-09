@@ -9,6 +9,7 @@ import {
 import { Formik, Form, Field, FieldProps, FormikHelpers } from 'formik';
 import { useRouter } from 'next/navigation';
 import { Button, Input } from '@repo/ui';
+import { useAuth } from '../hooks/useAuth';
 
 type Credentials = {
   email: string;
@@ -17,7 +18,7 @@ type Credentials = {
 
 export const LoginForm: React.FC = () => {
   const router = useRouter();
-  const toast = useToast();
+  const { login } = useAuth();
 
   const validateEmail = (value: string) => {
     let error;
@@ -42,7 +43,17 @@ export const LoginForm: React.FC = () => {
   const handleLogin = (
     values: Credentials,
     actions: FormikHelpers<Credentials>
-  ) => {};
+  ) => {
+    try {
+      login(values.email, values.password);
+      actions.setSubmitting(false);
+      actions.resetForm();
+      router.push('/timeline');
+    } catch (error) {
+      console.error(error);
+      actions.setSubmitting(false);
+    }
+  };
 
   return (
     <Formik

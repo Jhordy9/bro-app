@@ -11,7 +11,7 @@ import * as UserLoader from '../UserLoader';
 import UserType from '../UserType';
 
 export default mutationWithClientMutationId({
-  name: 'UserLoginWithEmail',
+  name: 'UserLogin',
   inputFields: {
     email: {
       type: new GraphQLNonNull(GraphQLString),
