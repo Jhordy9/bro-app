@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
-    "relay": "node_modules/.bin/relay-compiler"
+    "relay": "node_modules/.bin/relay-compiler",
+    "test": "jest"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
@@ -25,10 +26,14 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@jest/types": "^29.6.3",
     "@next/eslint-plugin-next": "^14.0.4",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
+    "@testing-library/jest-dom": "^6.2.0",
+    "@testing-library/react": "^14.1.2",
     "@types/eslint": "^8.56.1",
+    "@types/jest": "^29.5.11",
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
@@ -37,6 +42,8 @@
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.0.4",
     "graphql": "^16.8.1",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "relay-compiler": "^16.1.0",
     "typescript": "^5.3.3"
   }

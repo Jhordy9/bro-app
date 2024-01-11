@@ -2,7 +2,7 @@
 import { Box, Container, VStack, useDisclosure } from '@chakra-ui/react';
 import { Header } from '@repo/ui';
 import { LoginForm } from './components/LoginForm';
-import RegisterModal from './components/RegisterModal';
+import { RegisterModal } from './components/RegisterModal';
 
 const LoginPage: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
