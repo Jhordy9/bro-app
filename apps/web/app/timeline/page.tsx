@@ -2,37 +2,34 @@
 import { useState } from 'react';
 import {
   Box,
-  ChakraProvider,
   Stack,
-  Flex,
   Text,
   Badge,
   IconButton,
-  Spacer,
-  Heading,
-  VStack,
   HStack,
+  VStack,
+  Button,
 } from '@chakra-ui/react';
-import { Button } from '@repo/ui';
-import { TriangleUpIcon } from '@chakra-ui/icons';
+import { Header } from '@repo/ui';
+import { StarIcon } from '@chakra-ui/icons';
+import { useAuth } from '../hooks/useAuth';
 
-// Define Post type
 type Post = {
   id: number;
   username: string;
-  description: string;
   likeCount: number;
 };
 
 const TimelinePage: React.FC = () => {
   // Dummy data for initial posts
   const initialPosts: Post[] = [
-    { id: 1, username: 'User1', description: 'First post!', likeCount: 5 },
-    { id: 2, username: 'User2', description: 'Another post!', likeCount: 10 },
+    { id: 1, username: 'User1', likeCount: 5 },
+    { id: 2, username: 'User2', likeCount: 10 },
   ];
 
   const [posts, setPosts] = useState<Post[]>(initialPosts);
   const [newPost, setNewPost] = useState({ username: '', description: '' });
+  const { logout } = useAuth();
 
   const handleLike = (postId: number) => {
     const updatedPosts = posts.map((post) =>
@@ -47,7 +44,6 @@ const TimelinePage: React.FC = () => {
       const newPostData: Post = {
         id: postId,
         username: newPost.username,
-        description: newPost.description,
         likeCount: 0,
       };
       setPosts([...posts, newPostData]);
@@ -56,44 +52,42 @@ const TimelinePage: React.FC = () => {
   };
 
   return (
-    <ChakraProvider>
-      <VStack maxW='100%'>
-        <Heading mb={4}>Timeline</Heading>
-        <Flex direction='column' align='center' w='30%'>
-          <HStack mt={4} mb={5} w='100%'>
-            <Button
-              size='md'
-              mb={2}
-              text='Bro'
-              colorScheme='orange'
-              variant='outline'
-            />
-          </HStack>
-          <Stack spacing={4} w='100%'>
-            {posts.map((post) => (
-              <VStack key={post.id} maxW='100%'>
-                <Box p={4} borderWidth='1px' borderRadius='md' boxShadow='md'>
-                  <Badge variant='solid' colorScheme='teal' mb={2}>
-                    {post.username}
-                  </Badge>
-                  <Text>Bro!</Text>
-                  <Flex align='center' mt={2}>
-                    <Spacer />
-                    <Box>{post.likeCount} Bro&apos;s</Box>
-                  </Flex>
-                </Box>
+    <VStack w='100%'>
+      <Header handleLogout={logout} />
+      <Button size='md' mb={2} colorScheme='orange' variant='outline'>
+        Bro
+      </Button>
+      <Stack spacing={4}>
+        {posts.map((post) => (
+          <VStack key={post.id} alignItems='flex-start'>
+            <VStack
+              p={4}
+              borderWidth='1px'
+              borderRadius='md'
+              boxShadow='md'
+              w='md'
+              alignItems='flex-start'
+              spacing={2}
+            >
+              <Badge variant='solid' colorScheme='teal'>
+                {post.username}
+              </Badge>
+              <Text>Bro!</Text>
+              <HStack spacing={0.5}>
                 <IconButton
                   aria-label='Brow'
                   variant='shadow'
-                  icon={<TriangleUpIcon />}
+                  size='xs'
+                  icon={<StarIcon />}
                   onClick={() => handleLike(post.id)}
                 />
-              </VStack>
-            ))}
-          </Stack>
-        </Flex>
-      </VStack>
-    </ChakraProvider>
+                <Box>{post.likeCount} Bro likes</Box>
+              </HStack>
+            </VStack>
+          </VStack>
+        ))}
+      </Stack>
+    </VStack>
   );
 };
 

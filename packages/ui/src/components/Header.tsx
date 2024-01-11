@@ -1,12 +1,12 @@
-import { HStack, Heading } from '@chakra-ui/react';
-import { usePathname, useRouter } from 'next/navigation';
-import { Button } from './Button';
+import { Button, HStack, Heading } from '@chakra-ui/react';
+import { usePathname } from 'next/navigation';
 
-export const Header: React.FC = () => {
-  const router = useRouter();
+type Props = {
+  handleLogout?: () => void;
+};
+
+export const Header: React.FC<Props> = ({ handleLogout }) => {
   const pathname = usePathname();
-
-  const handleLogout = () => {};
 
   return (
     <HStack
@@ -21,7 +21,9 @@ export const Header: React.FC = () => {
         Bro App
       </Heading>
       {pathname === '/timeline' && (
-        <Button onClick={handleLogout} colorScheme='red' text='Logout' />
+        <Button onClick={handleLogout} colorScheme='red'>
+          Logout
+        </Button>
       )}
     </HStack>
   );
