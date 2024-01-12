@@ -1,5 +1,7 @@
 export type DataLoaders = {
   UserLoader: ReturnType<typeof import('../user/UserLoader').getLoader>;
+  PostLoader: ReturnType<typeof import('../post/PostLoader').getLoader>;
+  LikeLoader: ReturnType<typeof import('../like/LikeLoader').getLoader>;
 };
 
 const loaders: {
