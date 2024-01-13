@@ -1,8 +1,6 @@
 import { GraphQLString, GraphQLNonNull } from 'graphql';
 import { mutationWithClientMutationId } from 'graphql-relay';
 
-import { errorField, successField } from '@entria/graphql-mongo-helpers';
-
 import { generateToken } from '../../../services/auth';
 
 import UserModel from '../UserModel';
@@ -57,7 +55,5 @@ export default mutationWithClientMutationId({
         return await UserLoader.load(context, id);
       },
     },
-    ...errorField,
-    ...successField,
   },
 });

@@ -1,19 +1,40 @@
 import { GraphQLObjectType, GraphQLNonNull, GraphQLString } from 'graphql';
 
-import { nodesField, nodeField } from '../modules/node/typeRegister';
 import UserType from '../modules/user/UserType';
 import * as UserLoader from '../modules/user/UserLoader';
+import * as PostLoader from '../modules/post/PostLoader';
+import { PostConnection } from '@/modules/post/PostType';
+import { connectionArgs } from 'graphql-relay';
+import PostModel from '@/modules/post/PostModel';
 
 const QueryType = new GraphQLObjectType({
   name: 'Query',
   description: 'The root of all... queries',
   fields: () => ({
-    node: nodeField,
-    nodes: nodesField,
     me: {
       type: UserType,
-      resolve: (root, args, context) =>
-        UserLoader.load(context, context.user?._id),
+      resolve: async (_root, _args, context) => {
+        const user = await UserLoader.load(context, context.user?._id);
+        const lastPost = await PostModel.findOne({ author: context.user?._id })
+          .sort({ createdAt: -1 })
+          .select('createdAt');
+
+        return {
+          ...user,
+          lastPostDate: lastPost?.createdAt
+            ? // guarentee that the date is in UTC
+              new Date(lastPost.createdAt.toUTCString()).toISOString()
+            : null,
+        };
+      },
+    },
+    posts: {
+      type: new GraphQLNonNull(PostConnection.connectionType),
+      args: {
+        ...connectionArgs,
+      },
+      resolve: async (_, args, context) =>
+        await PostLoader.loadAll(context, args),
     },
     version: {
       type: new GraphQLNonNull(GraphQLString),

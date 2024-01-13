@@ -32,6 +32,7 @@ export type IUser = {
   password: string;
   authenticate: (plainTextPassword: string) => boolean;
   encryptPassword: (password: string | undefined) => string;
+  lastPostDate: Date | null;
   createdAt: Date;
   updatedAt: Date;
   _id: string;

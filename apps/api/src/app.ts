@@ -15,6 +15,7 @@ import {
 import { schema } from './schema/schema';
 import { getUser } from './services/auth';
 import { getContext } from './services/getContext';
+import { authMiddleware } from './middlewares/authentication';
 
 const router = new Router();
 

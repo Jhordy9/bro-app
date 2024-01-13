@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLString } from 'graphql';
+import { GraphQLObjectType, GraphQLScalarType, GraphQLString } from 'graphql';
 import { globalIdField } from 'graphql-relay';
 
 import {
@@ -27,6 +27,10 @@ const UserType = new GraphQLObjectType<IUser, GraphQLContext>({
     email: {
       type: GraphQLString,
       resolve: (user) => user.email,
+    },
+    lastPostDate: {
+      type: timestampResolver.createdAt.type,
+      resolve: (user) => user.lastPostDate,
     },
     ...timestampResolver,
   }),

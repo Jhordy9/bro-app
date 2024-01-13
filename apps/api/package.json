@@ -22,6 +22,7 @@
     "@koa/cors": "^5.0.0",
     "@koa/router": "^12.0.1",
     "@repo/typescript-config": "*",
+    "add": "^2.0.6",
     "bcrypt": "^5.1.1",
     "dataloader": "^2.2.2",
     "dotenv-cli": "^7.3.0",
